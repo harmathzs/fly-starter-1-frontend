@@ -1,26 +1,37 @@
 import { useEffect, useState } from "react"
 import { getBackendUrl } from "../config"
 
-export default function Queens(props) {
-    const [queens, setQueens] = useState({data:[]})
+export default function Queens() {
+    const [queens, setQueens] = useState({ data: [] })
 
-    useEffect(()=>{
+    useEffect(() => {
+        // Read queens from backend once when the component mounts.
         const backendUrl = getBackendUrl()
         fetch(`${backendUrl}/queens`)
-        .then(resJson=>resJson.json())
-        .then(setQueens)
-        .catch(console.warn)
+            .then((resJson) => resJson.json())
+            .then(setQueens)
+            .catch(console.warn)
     }, [])
 
     return <>
         <h2>Queens</h2>
-        {queens.data.map((queen)=><article key={queen.id}>
-            <hr />
-            <ul>
-                <li>id: {queen.id}</li>
-                <li>Name: {queen.name} {queen.number}</li>
-                <li>Country: {queen.country}</li>
-            </ul>
-        </article>)}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Country</th>
+                </tr>
+            </thead>
+            <tbody>
+                {queens.data.map((queen) => (
+                    <tr key={queen.id}>
+                        <td>{queen.id}</td>
+                        <td>{queen.name} {queen.number}</td>
+                        <td>{queen.country}</td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
     </>
 }
