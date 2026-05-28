@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
+import { getBackendUrl } from "../config"
 
 export default function Kings(props) {
     const [kings, setKings] = useState({data:[]})
 
     useEffect(()=>{
-        fetch('https://fly-starter-1-backend.fly.dev/kings')
+        const backendUrl = getBackendUrl()
+        fetch(`${backendUrl}/kings`)
         .then(resJson=>resJson.json())
         .then(setKings)
         .catch(console.warn)

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
+import { getBackendUrl } from "../config"
 
 export default function Queens(props) {
     const [queens, setQueens] = useState({data:[]})
 
     useEffect(()=>{
-        fetch('https://fly-starter-1-backend.fly.dev/queens')
+        const backendUrl = getBackendUrl()
+        fetch(`${backendUrl}/queens`)
         .then(resJson=>resJson.json())
         .then(setQueens)
         .catch(console.warn)
